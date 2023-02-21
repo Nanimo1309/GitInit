@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+if [ -d ".git" ]; then
+    echo "Git repository already exists"
+    exit 1
+fi
+
+git init -b main
+
+command="git config --local"
+
+prettyFormat="--pretty=\"format:%C(yellow bold)%h %C(green)%s %C(blue)%cn %C(magenta)<%cr> %C(yellow)%d\""
+
+$command alias.l "log ${prettyFormat}"
+$command alias.la "log ${prettyFormat} --graph --all"
+$command alias.s "status -su"
+$command alias.sa "status -u"
+$command alias.d "diff"
+$command alias.dh "diff HEAD"
+$command alias.a "add"
+$command alias.au "add -u"
+$command alias.aa "add --all"
+$command alias.r "restore --staged"
+$command alias.c "commit"
+$command alias.cm "commit -m"
+$command alias.ca "commit --amend --no-edit"
+
+$command color.status.added "green bold"
+$command color.status.changed "yellow bold"
+$command color.status.untracked "red bold"
+
+if [ ! -f ".gitignore" ]; then
+    printf "**\n\n!.gitignore\n" > .gitignore
+fi
+
+git add .gitignore
+git cm "Init Commit"
