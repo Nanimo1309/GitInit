@@ -1,11 +1,17 @@
 #!/usr/bin/env bash
 
-if [ -d ".git" ]; then
+if [ ! -d ".git" ]; then
+    git init -b main
+
+    printf "**\n\n!.gitignore\n" > .gitignore
+    git add .gitignore
+
+    git cm "Init Commit"
+else
     echo "Git repository already exists"
-    exit 1
 fi
 
-git init -b main
+echo "Updating aliases"
 
 command="git config --local"
 
@@ -29,9 +35,3 @@ $command color.status.added "green bold"
 $command color.status.changed "yellow bold"
 $command color.status.untracked "red bold"
 
-if [ ! -f ".gitignore" ]; then
-    printf "**\n\n!.gitignore\n" > .gitignore
-fi
-
-git add .gitignore
-git cm "Init Commit"
