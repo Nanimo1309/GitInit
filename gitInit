@@ -6,7 +6,7 @@ if [ ! -d ".git" ]; then
     printf "**\n\n!.gitignore\n" > .gitignore
     git add .gitignore
 
-    git cm "Init Commit"
+    git commit -m "Init Commit"
 else
     echo "Git repository already exists"
 fi
